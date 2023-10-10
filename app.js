@@ -51,12 +51,18 @@ fetch('http://localhost:3000/mydata',{
 }).then(response => response.json()) .then(data => console.log(data))
 
 }
-
+class Parson {
+    constructor(title,price,id){
+this.title=title;
+this.price=price;
+this.id=id;
+    }
+}
 function render2() {
     fetch("http://localhost:3000/mydata")
       .then(response => response.json())
       .then(data => {
-          const products = data.map(item => new Product(item.title, item.price ));
+          const products = data.map(item => new Parson(item.title, item.price ,item.id));
       
   console.log(products);
           const cards = document.getElementById('r');
@@ -70,8 +76,8 @@ function render2() {
               
                   <p>${product.title}</p>
                   <p>Price: ${product.price}</p>
-                  <button onclick="updateitem()">update </button>
-                  <button onclick="deleteItem()">  delete </button>
+                  <button id="${product.id}" onclick="updateitem(this)">update </button>
+                  <button id="${product.id}" onclick="deleteItem(this)">  delete </button>
               `;
               cards.appendChild(card);
           });
@@ -79,29 +85,36 @@ function render2() {
   }
  render2()
 
-  function deleteItem() {
-    
-    fetch(`http://localhost:3000/mydata/2`, {
+  function deleteItem(e) {
+    const deletitem=e.id;
+    console.log(deletitem);
+    fetch(`http://localhost:3000/mydata/${deletitem}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
             
         },
     })
-   
+    
   }
-  function updateitem() {
+  function updateitem(e) {
+    let updateite =e.id;
+
+    
     let tt=document.getElementById("title").value;
     let pr=document.getElementById("price").value;
-    fetch(`http://localhost:3000/mydata/2`, {
+    fetch(`http://localhost:3000/mydata/${updateite}`, {
         method: 'put',
         headers: {
             'Content-Type': 'application/json',
             
         },
-        body: JSON.stringify({ tt, pr }),
+        body: JSON.stringify({
+            "title":tt,
+            "price":pr
+        }),
 
         
     })
-   
+    
   }

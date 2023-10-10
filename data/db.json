@@ -1,0 +1,14 @@
+{
+  "mydata": [
+    {
+      "title": "laith",
+      "price": "50",
+      "id": 1
+    },
+    {
+      "title": "sadasd",
+      "price": "asdasd",
+      "id": 2
+    }
+  ]
+}
